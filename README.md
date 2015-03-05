@@ -17,11 +17,22 @@ to decide on a lunch restaurant.
 Fredrik Boulund  
 <your name here>
 
+## Usage
+To use the lunchbot, clone the repository into a folder of your choice, then
+setup a cronjob to run it at a suitable time every weekday, e.g. around 10.45.
+Like so:
+
+    45 10 * * mon,tue,wed,thu,fri /path/to/repository/lunchplans.py
+
+It expects two files in the base directory: `other.txt` and `mailinglist.txt`.
+The file `other.txt` contains one restaurant name per line, for restaurants that
+do not have an online menu or haven't yet been given their own restaurant module.
+The file `mailinglist.txt` contains emails adresses, one per line, for everyone 
+who should receive an email every weekday with the complete lunch menu.
 
 ## Contribute
-You can contribue by writing a lunch restaurant module if you feel there
-is one missing. 
-Some key functionality is still missing:
+You can contribue by writing a lunch restaurant module if you feel there is one
+missing.  Some key functionality is still missing:
 
   * Automatically create a poll
   * Send emails to everyone
@@ -30,10 +41,9 @@ Below follows some suggestions for areas that can be improved.
 
 ### Restaurant module
 To create a restaurant module, copy one of the previous modules in
-`restaurants` and modify it so it acts like the other restaurant modules.
-When you are done, add it to the import list in `restaurants/__init__.py`.
-The module will then be imported automatically in the the main
-`lunchplans.py` program.
+`restaurants` and modify it so it acts like the other restaurant modules.  When
+you are done, add it to the import list in `restaurants/__init__.py`.  The
+module will then be imported automatically in the main `lunchplans.py` program.
 
 #### Restaurant API
 All restaurant modules must conform to the same API.  Each restaruant is
