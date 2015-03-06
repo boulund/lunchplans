@@ -27,7 +27,7 @@ def get_lunch_menus():
     return menus
 
 
-def create_combined_menu(menus):
+def create_combined_menu(restaurant_menus):
     """ Combine all menus into one single string.
     """
     supermenu = []
