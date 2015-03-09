@@ -8,6 +8,7 @@ import villan
 import einstein
 import timeout
 import pizza
+import thai
 import other
 
 restaurants = [
@@ -17,5 +18,6 @@ restaurants = [
         einstein,
         timeout,
         pizza,
+        thai,
         other,
         ]

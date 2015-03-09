@@ -10,6 +10,16 @@ The following subheaders should be used in the change log:
 - `Fixed` for any bug fixes.
 - `Security` to invite users to upgrade in case of vulnerabilities.
 
+## [wip] 2015-03-09
+### Added
+- Added restaurant module for Thai
+- Support for changing the smtp server port used when sending emails.
+
+### Fixed
+- Changed to unicode strings in restaurant modules with "exotic" character
+  requirements.
+
+
 ## [First release] 2015-03-06
 ### Added
 - A restaurants module with modules for: Einstein, Kårrestaurangen, Linsen,
