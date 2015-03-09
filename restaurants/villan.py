@@ -14,11 +14,11 @@ def todays_lunch():
     """ Retrieve today's lunch options from Chalmersvillan Gibraltargatan 1A.
     """
     today = datetime.now().date()
-    weekdays = {0: "Måndag", 1: "Tisdag", 2: "Onsdag", 3: "Torsdag",
-                4: "Fredag", 5: "Lördag", 6: "Söndag"}
+    weekdays = {0: u"Måndag", 1: u"Tisdag", 2: u"Onsdag", 3: u"Torsdag",
+                4: u"Fredag", 5: u"Lördag", 6: u"Söndag"}
     weekday = weekdays[datetime.now().weekday()]
 
-    logging.debug("Downloading the menu for Chalmersvillan on {}, {}".format(today, weekday))
+    logging.debug(u"Downloading the menu for Chalmersvillan on {}, {}".format(today, weekday))
     webpage = "http://narahem-catering.blogspot.se/p/matsedel-villan.html"
     r = requests.get(webpage)
 
@@ -31,7 +31,7 @@ def todays_lunch():
             menu_items.append(text[idx+4])
             break
     else:
-        menu_items.append("Error parsing menu")
+        menu_items.append(u"Error parsing menu")
 
     menu = "\n".join(menu_items)
     return menu

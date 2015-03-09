@@ -53,6 +53,7 @@ def parse_mailinglist(filename):
         logger.info("Found no email addresses in mailinglist.txt")
     return emails
 
+
 def get_smtp_server():
     """ Get the SMTP server host, port
     """
@@ -68,6 +69,7 @@ def get_smtp_server():
         logger.info("file '%s' not found, using default smtp server %s:%d" %(filename,server,port))
     return dict(server=server, port=port)
 
+
 def send_emails(message, mailinglist, sender="lunchbot@mailinator.com"):
     """ Send emails with message to all recipients.
     """
@@ -82,6 +84,7 @@ def send_emails(message, mailinglist, sender="lunchbot@mailinator.com"):
 	msg["From"] = sender
 	msg["To"] = ",".join(recipients)
         s.sendmail(sender, "fredrik.boulund@chalmers.se", msg.as_string())
+
 
 if __name__ == "__main__":
     restaurant_menus = get_lunch_menus()
