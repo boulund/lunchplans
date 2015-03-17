@@ -38,9 +38,16 @@ who should receive an email every weekday with the complete lunch menu.
 
 ## Contribute
 You can contribue by writing a lunch restaurant module if you feel there is one
-missing.  Some key functionality is still missing:
+missing.  
 
-  * Automatically create a poll
+### TODO
+Some key functionality is still missing:
+
+  * Add more lunch menu parsers/scrapers
+  * "Lunchbot"-code that suggests menu options, can be expanded with lots of ideas
+
+
+## What can I do?
 
 The following sections highlight some suggestions for areas that can be improved.
 
