@@ -5,19 +5,59 @@
 # Purpose:
 #  Generate daily lunch menu summaries 
 
-
 from sys import argv, exit
 from email.mime.text import MIMEText
+import argparse
 import logging
 import smtplib
 import requests
 
 from restaurants import restaurants
 
-logger = logging.getLogger("lunchplans")
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
-debugmode = True
+
+def parse_commandline(argv):
+    """ Parse commandline arguments.
+    
+    Input: argv
+    Returns:  options, logger
+    """
+    
+    desc = """Lunchplans -- summarize lunch restaurant options."""
+    parser = argparse.ArgumentParser(description=desc)
+    
+    parser.add_argument("-e", "--email", dest="email",
+                        default=""
+                        help="Email address to send summary to. A filename with one email address per line can be specified instead [default: not used].")
+    parser.add_argument("--email-server", dest="email_server",
+                        default="localhost",
+                        help="Specify email server [default: %(default)s].")
+    parser.add_argument("--email-port", dest="email_port",
+                        type=int,
+                        default=25,
+                        help="Port to send email on [default: %(default)s].")
+    parser.add_argument("--sender-email", dest="sender_email",
+                        default="lunchbot@mailinator.com",
+                        help="Specify sender email address [default: %(default)s]")
+    
+    devopts = parser.add_argument_group("Developer options", "Use at your own peril!")
+    devopts.add_argument("--loglevel",
+                         choices=["DEBUG", "INFO"],
+                         default="INFO"
+                         help="Set logging level [default: %(default)s].")
+    
+    options = parser.parse_args()
+    
+    # Setup logging
+    logger = logging.getLogger("lunchplans")
+    logger.addHandler(logging.StreamHandler())
+    if options.loglevel == "DEBUG":
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
+    
+    return options, logger
+    
+    
 
 def get_lunch_menus():
     """ Get lunch menus from all restauraunts.
@@ -54,39 +94,31 @@ def parse_mailinglist(filename):
     return emails
 
 
-def get_smtp_server():
-    """ Get the SMTP server host, port
-    """
-    filename = "smtpserver.txt"
-    server = "localhost"
-    port = 25
-    try:
-	serverport = open(filename).readline().split(':')
-	server = serverport[0]
-	if (len(serverport) > 1):
-	    port = int(serverport[1])
-    except IOError:
-        logger.info("file '%s' not found, using default smtp server %s:%d" %(filename,server,port))
-    return dict(server=server, port=port)
-
-
-def send_emails(message, mailinglist, sender="lunchbot@mailinator.com"):
+def send_emails(message, target, sender, server, port):
     """ Send emails with message to all recipients.
     """
-    recipients = parse_mailinglist(mailinglist)
-    server = get_smtp_server()
-    if debugmode:
-        print message
+    if "@" in target:
+        recipients = [options.target]
     else:
-	s = smtplib.SMTP(server['server'],port=server['port'])
+        recipients = parse_mailinglist(mailinglist)
+        
+	s = smtplib.SMTP(server, port=port)
 	msg = MIMEText(message, _charset="UTF-8")
 	msg["Subject"] = "Lunchplans?"
 	msg["From"] = sender
 	msg["To"] = ",".join(recipients)
-        s.sendmail(sender, "fredrik.boulund@chalmers.se", msg.as_string())
+    s.sendmail(sender, recipients[0], msg.as_string())
 
 
 if __name__ == "__main__":
+    options, logger = parse_commandline(argv)
     restaurant_menus = get_lunch_menus()
     supermenu = create_combined_menu(restaurant_menus)
-    send_emails(supermenu, "mailinglist.txt")
+    print supermenu
+    
+    if options.email:
+        send_emails(supermenu,
+                    target=options.email,
+                    sender=options.sender_email,
+                    server=options.email_server,
+                    port=options.email_port)
