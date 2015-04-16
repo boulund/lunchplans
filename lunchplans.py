@@ -26,7 +26,7 @@ def parse_commandline(argv):
     parser = argparse.ArgumentParser(description=desc)
     
     parser.add_argument("-e", "--email", dest="email",
-                        default=""
+                        default="",
                         help="Email address to send summary to. A filename with one email address per line can be specified instead [default: not used].")
     parser.add_argument("--email-server", dest="email_server",
                         default="localhost",
@@ -42,7 +42,7 @@ def parse_commandline(argv):
     devopts = parser.add_argument_group("Developer options", "Use at your own peril!")
     devopts.add_argument("--loglevel",
                          choices=["DEBUG", "INFO"],
-                         default="INFO"
+                         default="INFO",
                          help="Set logging level [default: %(default)s].")
     
     options = parser.parse_args()
@@ -65,9 +65,10 @@ def get_lunch_menus():
     menus = {}
     for restaurant in restaurants:
         menu = restaurant.todays_lunch()
-        if type(menu) is str:
+        if isinstace(menu, str):
             menu = menu.decode("utf-8")
         menus[restaurant.name] = menu
+    logger.debug("Finished parsing restaurant menus.")
     return menus
 
 
@@ -98,16 +99,19 @@ def send_emails(message, target, sender, server, port):
     """ Send emails with message to all recipients.
     """
     if "@" in target:
-        recipients = [options.target]
+        recipients = [target]
     else:
         recipients = parse_mailinglist(mailinglist)
         
-	s = smtplib.SMTP(server, port=port)
-	msg = MIMEText(message, _charset="UTF-8")
-	msg["Subject"] = "Lunchplans?"
-	msg["From"] = sender
-	msg["To"] = ",".join(recipients)
+    logger.debug("Sending email(s) to: {}".format(recipients))
+    s = smtplib.SMTP(server, port=port)
+    msg = MIMEText(message, _charset="UTF-8")
+    msg["Subject"] = "Lunchplans?"
+    msg["From"] = sender
+    msg["To"] = ",".join(recipients)
     s.sendmail(sender, recipients[0], msg.as_string())
+    logger.debug("Email(s) sent.")
+
 
 
 if __name__ == "__main__":
