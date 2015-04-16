@@ -65,7 +65,7 @@ def get_lunch_menus():
     menus = {}
     for restaurant in restaurants:
         menu = restaurant.todays_lunch()
-        if isinstace(menu, str):
+        if isinstance(menu, str):
             menu = menu.decode("utf-8")
         menus[restaurant.name] = menu
     logger.debug("Finished parsing restaurant menus.")
