@@ -10,7 +10,26 @@ The following subheaders should be used in the change log:
 - `Fixed` for any bug fixes.
 - `Security` to invite users to upgrade in case of vulnerabilities.
 
-## [wip] 2015-03-09
+
+## [wip] 2015-
+
+
+
+## [maintentance] 2015-05-04
+### Added
+- Added argparser
+- Added "Bamjam Place" and "Pasta Etc." to the Other restaurant module.
+
+### Changed
+- Moved externally read configuration values into
+  defaults in the command line arguments.
+
+### Removed
+- Removed unecessary dependencies on external files (other.txt, smptserver.txt)
+  by moving defaults into argparser defaults.
+
+
+## [maintenance] 2015-03-09
 ### Added
 - Added restaurant module for Thai
 - Support for changing the smtp server port used when sending emails.
