@@ -7,52 +7,62 @@ Requires Python 2.7 with:
   * beautifulsoup4
   * requests
 
+The program has no other dependencies and should be fairly straightforward
+to get running after download. To download a clone of the bitbucket repository,
+run `hg clone http://bitbucket.org/chalmersmathbioinformatics/lunchplans`. 
+
 
 ## What does it do?
-The main goal was to produce a useful program that could generate a listing of
-available lunch options inside a Doodle poll with Yes, No, Maybe options for
-participants to make it quick and easy to decide on a lunch restaurant.
+The main goal was to produce a simple program that could generate a listing of
+available lunch options for the day.
 
-Currently, it collects lunch menus and combines them into an email that can be
-sent to a list of email adresses. 
+Currently it can:
+
+  * collect lunch menus from websites and combines them into a single summary. 
+  * send email(s) with the summary to one or more adresses.
 
 
 ## Authors
-Fredrik Boulund  
-<your name here>
+Fredrik Boulund
+Tobias Abenius
+*<your name here>*
+
+## Contributors
+Tobias Österlund
+*<your name here>*
 
 
 ## Usage
-To use the lunchbot, clone the repository into a folder of your choice, then
-setup a cronjob to run it at a suitable time every weekday, e.g. around 10.45.
-Like so:
+To use the lunchbot, clone the repository into a folder of your choice, run
+`lunchplans.py` from inside that folder. It will then print a summary of
+today's lunch options to stdout.
+
+### Automate it
+You can setup a cronjob to run it at a suitable time every weekday, e.g. around
+10.45. Run `crontab -e` to edit your cron table and add a line to make it run
+every weekday. For example:
 
     45 10 * * mon,tue,wed,thu,fri /path/to/repository/lunchplans.py
-
-It expects two files in the base directory: `other.txt` and `mailinglist.txt`.
-The file `other.txt` contains one restaurant name per line, for restaurants that
-do not have an online menu or haven't yet been given their own restaurant module.
-The file `mailinglist.txt` contains emails adresses, one per line, for everyone 
-who should receive an email every weekday with the complete lunch menu.
 
 
 ## Contribute
 You can contribue by writing a lunch restaurant module if you feel there is one
-missing.  
+missing.
 
 ### TODO
-Some key functionality is still missing:
+Several things can be contributed by you:
 
-  * Add more lunch menu parsers/scrapers
-  * "Lunchbot"-code that suggests menu options, can be expanded with lots of ideas
+  * Add more restaurant modules (lunch menu parsers/scrapers)
+  * "Lunchbot"-code that suggests a lunchplace each day.
+	 Can be expanded with lots of ideas; Markov chain-based etc.
 
 
 ## What can I do?
-
 The following sections highlight some suggestions for areas that can be improved.
 
 We store all notable modifications to the project in `CHANGELOG.md`, so make
-sure to update it if you modify anything.
+sure to update it if you modify anything. There are some brief instructions in the
+changelog file.
 
 
 ### Restaurant module
@@ -76,8 +86,14 @@ The name attribute is defined at the top level of the file and is just a
 string containing the restaurants name, keep it reasonably short.
 
 
+### Markov chain-based recommendation lunchbot engine
+There's been some talk about implementing a Markov chain-based "lunchbot" to
+create a suitable lunch recommendation each day, removing the need for lengthy
+discussions on Skype (potentially improving workplace productivity ;)).
+
 ### Doodle API
 It would be cool to implement automatic Doodle poll generation.
 Doodle has a Poll Wizard API that might be used to generate polls:
 
 http://doodle.com/wizard/DoodleWizard.pdf
+
