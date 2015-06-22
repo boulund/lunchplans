@@ -13,7 +13,9 @@ The following subheaders should be used in the change log:
 
 ## [wip] 2015-
 
-
+## [maintentance] 2015-06-22
+### Added
+- Added "J.A. pripps Pub" restaurant module 
 
 ## [maintentance] 2015-05-04
 ### Added

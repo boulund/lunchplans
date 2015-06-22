@@ -9,6 +9,7 @@ import einstein
 import timeout
 import pizza
 import thai
+import japripps
 import other
 
 restaurants = [
@@ -19,5 +20,6 @@ restaurants = [
         timeout,
         pizza,
         thai,
+        japripps,
         other,
         ]
