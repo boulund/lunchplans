@@ -12,6 +12,12 @@ The following subheaders should be used in the change log:
 
 
 ## [wip] 2015-
+### Added
+- 
+
+### Fixed
+- Report error if unable to parse restaurant menu instead of crashing.
+
 
 ## [maintentance] 2015-06-22
 ### Added
@@ -48,4 +54,5 @@ The following subheaders should be used in the change log:
 - Capability of sending emails to a list of email addresses.
 - A README file with instructions on how to contribute.
 - A Changelog file, where we keep notable modifications to the project.
+
 

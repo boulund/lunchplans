@@ -64,7 +64,11 @@ def get_lunch_menus():
     """
     menus = {}
     for restaurant in restaurants:
-        menu = restaurant.todays_lunch()
+        try:
+            menu = restaurant.todays_lunch()
+        except Exception as e:
+            logger.error("Error while retrieving menu for {}:\n  {}".format(restaurant.name, e))
+            continue
         if isinstance(menu, str):
             menu = menu.decode("utf-8")
         menus[restaurant.name] = menu
