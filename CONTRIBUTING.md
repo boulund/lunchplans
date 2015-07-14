@@ -7,7 +7,12 @@ Several things can be contributed by you:
 
 If you expect your contribution to require involvment of more people than just
 yourself, please keep development of your new feature in a separate branch. It
-is very easy to separate development into a separate branch:
+is very easy to separate development into a separate branch. To see all branches 
+in the repository:
+
+    hg branches
+
+To change into a branch (or create a new one):
 
     hg branch my-new-feature
 	<do whatever you want; create files, folders>
